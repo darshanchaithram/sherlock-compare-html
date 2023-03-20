@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Compare Values</title>
+</head>
+<body>
+  <form onsubmit="handleSubmit(event)">
+    <label>
+      Input:
+      <input type="text" id="answer" name="answer" required>
+    </label>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const answerInput = document.getElementById('answer');
+      const inputHash = sha256(answerInput.value);
+      const predefinedValueHash = 'bb340b0f7e66b52b7426c07934c03a99881c41e8ea05b4ceba0e3f09b24dd538';
+      if (inputHash === predefinedValueHash) {
+        document.getElementById('result').innerText = 'Correct';
+      } else {
+        document.getElementById('result').innerText = 'Incorrect';
+      }
+      answerInput.value = '';
+    }
+
+    function sha256(message) {
+      const sha256Hash = CryptoJS.SHA256(message);
+      return sha256Hash.toString(CryptoJS.enc.Hex);
+    }
+  </script>
+</body>
+</html>
